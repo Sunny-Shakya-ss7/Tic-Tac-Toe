@@ -10,6 +10,7 @@
  ***************************************************************************************************************************************************/
 #include<stdio.h>
 #include<conio.h>
+#include<windows.h>
 
 int move(int [3][3]);
 int first_player_move(int [3][3]);
@@ -32,6 +33,8 @@ int main()
     printf("\n\n*****************************************************INSTRUCTIONS*******************************************************\n");
     printf("-> ENTER NUMBERS FOR PLACING MARKS (O/X)\n-> EACH PLAYER WILL ENTER (1/2/3/4/5/6/7/8/9) FOR THEIR RESPECTIVE MARKS ALTERNATIVELY\n\n");
     printf("************************************************************************************************************************\n");
+    system("PAUSE");
+    system("cls");
     do
     {
         first_player_move(a);
