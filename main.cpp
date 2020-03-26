@@ -1,26 +1,17 @@
-/***************************************************************************************************************************************************
-
-                 Version 1 : - Used coordinates to input marks
-                             - Line 40:[count==5]
-
-                 Version 2 : - Replaced coordinates(00,01,02,10,11,12,20,21,22) with numbers(1,2,3,4,5,6,7,8,9)
-                             - Input (1,2,3,4,5,6,7,8,9) for selecting position to mark
-                             - line 40:[count==4]
-
- ***************************************************************************************************************************************************/
 #include<stdio.h>
 #include<conio.h>
 #include<windows.h>
+#include<time.h>
 
 int move(int [3][3]);
 int first_player_move(int [3][3]);
-int second_player_move(int [3][3]);
+int second_player_move(int [3][3],int choice);
 int check_result(int [3][3]);
 int display(int [3][3]);
 
 int main()
 {
-    int i,j,r=0,a[3][3],count=0;
+    int i,j,r=0,a[3][3],count=0,choice;
     for(i=0; i<3; i++)
     {
         for(j=0; j<3; j++)
@@ -32,34 +23,56 @@ int main()
     display(a);
     printf("\n\n*****************************************************INSTRUCTIONS*******************************************************\n");
     printf("-> ENTER NUMBERS FOR PLACING MARKS (O/X)\n-> EACH PLAYER WILL ENTER (1/2/3/4/5/6/7/8/9) FOR THEIR RESPECTIVE MARKS ALTERNATIVELY\n\n");
-    printf("************************************************************************************************************************\n");
-    system("PAUSE");
+    printf("************************************************************************************************************************\n\n\n\t\t\t\t\t\t");
+
+    printf("player vs computer\n\t\t\t\t\t\t");
+    printf("player vs player");
+    scanf("%d",&choice);
     system("cls");
-    do
+
+    switch(choice)
     {
-        first_player_move(a);
-        if((a[0][0]=='O' && a[0][1]=='O' && a[0][2]=='O') || (a[0][0]=='O' && a[1][1]=='O' && a[2][2]=='O') || (a[0][0]=='O' && a[1][0]=='O' && a[2][0]=='O') || (a[0][1]=='O' && a[1][1]=='O' && a[2][1]=='O') || (a[0][2]=='O' && a[1][2]=='O' && a[2][2]=='O') || (a[0][2]=='O' && a[1][1]=='O' && a[2][0]=='O') || (a[1][0]=='O' && a[1][1]=='O' && a[1][2]=='O') || (a[2][0]=='O' && a[2][1]=='O' && a[2][2]=='O'))
-            goto check;
-        second_player_move(a);
-        check:
-        r=check_result(a);
-        count++;
-        if(count==4)
-            goto end;
-    }while(r!=1 && r!=2);
+    case 1:
+        do
+        {
+            first_player_move(a);
+            if((a[0][0]=='O' && a[0][1]=='O' && a[0][2]=='O') || (a[0][0]=='O' && a[1][1]=='O' && a[2][2]=='O') || (a[0][0]=='O' && a[1][0]=='O' && a[2][0]=='O') || (a[0][1]=='O' && a[1][1]=='O' && a[2][1]=='O') || (a[0][2]=='O' && a[1][2]=='O' && a[2][2]=='O') || (a[0][2]=='O' && a[1][1]=='O' && a[2][0]=='O') || (a[1][0]=='O' && a[1][1]=='O' && a[1][2]=='O') || (a[2][0]=='O' && a[2][1]=='O' && a[2][2]=='O'))
+                goto check1;
+            second_player_move(a,choice);
+            check1:
+            r=check_result(a);
+            count++;
+            if(count==4)
+                goto end;
+        }while(r!=1 && r!=2);
+        break;
+    case 2:
+        do
+        {
+            first_player_move(a);
+            if((a[0][0]=='O' && a[0][1]=='O' && a[0][2]=='O') || (a[0][0]=='O' && a[1][1]=='O' && a[2][2]=='O') || (a[0][0]=='O' && a[1][0]=='O' && a[2][0]=='O') || (a[0][1]=='O' && a[1][1]=='O' && a[2][1]=='O') || (a[0][2]=='O' && a[1][2]=='O' && a[2][2]=='O') || (a[0][2]=='O' && a[1][1]=='O' && a[2][0]=='O') || (a[1][0]=='O' && a[1][1]=='O' && a[1][2]=='O') || (a[2][0]=='O' && a[2][1]=='O' && a[2][2]=='O'))
+                goto check;
+            second_player_move(a,choice);
+            check:
+            r=check_result(a);
+            count++;
+            if(count==4)
+                goto end;
+        }while(r!=1 && r!=2);
+        break;
+    default:
+        printf("Enter valid choice");
+    }
+
+
     end:
     if(r==1)
-    {
        printf("\n\n\n\t\t\t\t\t\tPlayer 1 is winner!!!!!!!!\n\n\n\n");
-    }
     else if(r==2)
-    {
        printf("\n\n\n\t\t\t\t\t\tPlayer 2 is winner!!!!!!!!\n\n\n\n");
-    }
     else if(r==0)
-    {
         printf("\n\n\t\t\t\t\t\tDRAW\n");
-    }
+
     return 0;
 }
 
@@ -129,12 +142,22 @@ int first_player_move(int x[3][3])
     display(x);
 }
 
-int second_player_move(int y[3][3])
+int second_player_move(int y[3][3],int choice)
 {
     int i,j,r,m=0,n=0,ip;
     P1:
-    printf("Enter position (X):");
-    scanf("%d",&ip);
+    if(choice==1)
+    {
+        Sleep(1000);
+        srand(time(0));
+        ip = rand() % 9;
+
+    }
+    else{
+        printf("Enter position (X):");
+        scanf("%d",&ip);
+    }
+
     if(ip==1)
     {
         m=0;
