@@ -3,7 +3,6 @@
 #include<windows.h>
 #include<time.h>
 
-int move(int [3][3]);
 int first_player_move(int [3][3]);
 int second_player_move(int [3][3],int choice);
 int check_result(int [3][3]);
@@ -16,7 +15,7 @@ int main()
     {
         for(j=0; j<3; j++)
         {
-            a[i][j]=' ';
+            a[i][j] = ' ';
         }
     }
     printf("...............................................BOARD WILL LOOK LIKE THIS................................................\n\n");
@@ -40,9 +39,9 @@ int main()
                 goto check1;
             second_player_move(a,choice);
             check1:
-            r=check_result(a);
+            r = check_result(a);
             count++;
-            if(count==4)
+            if(count == 4)
                 goto end;
         }while(r!=1 && r!=2);
         break;
@@ -54,9 +53,9 @@ int main()
                 goto check;
             second_player_move(a,choice);
             check:
-            r=check_result(a);
+            r = check_result(a);
             count++;
-            if(count==4)
+            if(count == 4)
                 goto end;
         }while(r!=1 && r!=2);
         break;
@@ -64,13 +63,14 @@ int main()
         printf("Enter valid choice");
     }
 
-
     end:
-    if(r==1)
+        system("cls");
+        display(a);
+    if(r == 1)
        printf("\n\n\n\t\t\t\t\t\tPlayer 1 is winner!!!!!!!!\n\n\n\n");
-    else if(r==2)
+    else if(r == 2)
        printf("\n\n\n\t\t\t\t\t\tPlayer 2 is winner!!!!!!!!\n\n\n\n");
-    else if(r==0)
+    else if(r == 0)
         printf("\n\n\t\t\t\t\t\tDRAW\n");
 
     return 0;
@@ -81,9 +81,11 @@ int main()
  *********************************************************************************/
 int first_player_move(int x[3][3])
 {
-    int i,j,r,m=0,n=0,ip;
+    int i,j,m=0,n=0,ip;
     P1:
-    printf("Enter position (O):");
+        system("cls");
+        display(x);
+    printf("\nEnter position (O):");
     scanf("%d",&ip);
     if(ip==1)
     {
@@ -146,15 +148,17 @@ int second_player_move(int y[3][3],int choice)
 {
     int i,j,r,m=0,n=0,ip;
     P1:
+        system("cls");
+        display(y);
     if(choice==1)
     {
         Sleep(1000);
+        again:
         srand(time(0));
         ip = rand() % 9;
-
     }
     else{
-        printf("Enter position (X):");
+        printf("\nEnter position (X):");
         scanf("%d",&ip);
     }
 
@@ -209,9 +213,15 @@ int second_player_move(int y[3][3],int choice)
     }
     else if(y[m][n]=='O' || y[m][n]=='X')
     {
-        printf("\n\n-----------------------------------------------------INVALID MOVE-------------------------------------------------------\n\t\t\t\t\t\t      TRY AGAIN\n");
-        goto P1;
+        if(choice==1)
+            goto again;
+        else
+        {
+            printf("\n\n-----------------------------------------------------INVALID MOVE-------------------------------------------------------\n\t\t\t\t\t\t      TRY AGAIN\n");
+            goto P1;
+        }
     }
+    system("cls");
     display(y);
 }
 
@@ -465,19 +475,20 @@ int check_result(int a[3][3])
  *********************************************************************************/
 int display(int p[3][3])
 {
+    printf("\n");
     int i,j;
     for(i=0; i<3; i++)
     {
-        printf("\t\t\t");
+        printf("     \t\t     ");
         for(j=0; j<3; j++)
         {
-            printf("\t\t");
+            printf("    \t  ");
             printf("%c\t",p[i][j]);
             if(j!=2)
-                printf("\t|");
+                printf("     |     ");
         }
         if(i!=2)
-            printf("\n\t\t\t\t----------------------------------------------------------------------------------\n");
+            printf("\n\n\t\t\t     ---------------------------------------------------------\n\n");
     }
     printf("\n");
 }
